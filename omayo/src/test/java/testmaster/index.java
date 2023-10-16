@@ -195,7 +195,7 @@ public class index {
 	}
 	
 	//TestCase4: In index page, click the id link2 to open URL on new tab; should opened new tab and directed to http://selenium143.blogspot.com/;
-	@Ignore
+	//@Ignore
 	@Parameters("browserName")
 	@Test
 	public void testCase4(String browserName) throws IOException, AWTException, InterruptedException{
@@ -227,7 +227,7 @@ public class index {
 		}
 	}
 	
-	//@Ignore
+	@Ignore
 	@Test
 	public void testSomethink() throws InterruptedException{
 	    try {
