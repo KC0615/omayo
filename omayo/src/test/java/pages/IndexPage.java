@@ -165,16 +165,16 @@ public class IndexPage {
 		
 	}
 	
-	public static WebElement checkbox_mroption(WebDriver driver){
+	public static WebElement checkbox_dte(WebDriver driver){
 		
 		element = driver.findElement(By.id("dte"));
 		return element;
 		
 	}
 	
-	public static WebElement checkbox_checkthis(WebDriver driver){
+	public static WebElement button_checkthis(WebDriver driver){
 		
-		element = driver.findElement(By.xpath("//*[text()='Check this'"));
+		element = driver.findElement(By.xpath("//button[contains(text(),'Check this')]"));
 		return element;
 		
 	}
