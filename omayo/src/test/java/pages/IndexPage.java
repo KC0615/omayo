@@ -207,9 +207,9 @@ public class IndexPage {
 		
 	}
 	
-	public static WebElement textarea_textareafield(WebDriver driver){
+	public static WebElement textarea_catplaying(WebDriver driver){
 		
-		element = driver.findElement(By.xpath("//*[text()='The cat was playing in the garden.'"));
+		element = driver.findElement(By.xpath("//textarea[contains(text(),'The cat was playing in the garden.')]"));
 		return element;
 		
 	}
@@ -434,6 +434,13 @@ public class IndexPage {
 	public static WebElement buttondelayedbuttondropdown_Dropdown(WebDriver driver){
 		
 		element = driver.findElement(By.xpath("//*[text()='Dropdown'"));
+		return element;
+		
+	}
+	
+	public static WebElement image_element(WebDriver driver){
+		
+		element = driver.findElement(By.xpath("/html[1]/body[1]/div[4]/div[2]/div[2]/div[2]/div[2]/div[2]/div[2]/div[1]/div[4]/div[3]/div[1]/aside[1]/div[1]/div[1]/div[1]/img[1]"));
 		return element;
 		
 	}
