@@ -590,7 +590,8 @@ public class index {
 	}
 
 	// TestCase12: In index page, click the id prompt button then show the prompt
-	// box, input your name and click the ok button; The prompt box should be closed;
+	// box, input your name and click the ok button; The prompt box should be
+	// closed;
 	@Ignore
 	@Parameters("browserName")
 	@Test
@@ -609,12 +610,12 @@ public class index {
 		actions.moveToElement(IndexPage.getpromptbutton_prompt(driver)).perform();
 		// Click the id prompt button
 		IndexPage.getpromptbutton_prompt(driver).click();
-		//Thread.sleep(3000);
+		// Thread.sleep(3000);
 		// Wait for the prompt box to be displayed and store it in a variable
 		Alert alert = wait.until(ExpectedConditions.alertIsPresent());
-		// Chrome driver is not support prompt alert input text, so if browser is not chrome then input the name
-		if (browserName != "chrome")
-		{
+		// Chrome driver is not support prompt alert input text, so if browser is not
+		// chrome then input the name
+		if (browserName != "chrome") {
 			// input your name
 			alert.sendKeys("KaKaKaKa");
 		}
@@ -627,80 +628,114 @@ public class index {
 			AssertJUnit.assertEquals(ActualResult, ExpectedResult);
 			Reporter.log("Test Passed, ActualUrl: " + ActualResult + ", ExpectedUrl: " + ExpectedResult);
 			// Capture full window screen
-						BufferedImage screenShot = robot
-								.createScreenCapture(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()));
-						ImageIO.write(screenShot, "JPG",
-								new File(projectPath + "/screenshot/Passed_TestCase12_" + browserName + ".jpg"));
+			BufferedImage screenShot = robot
+					.createScreenCapture(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()));
+			ImageIO.write(screenShot, "JPG",
+					new File(projectPath + "/screenshot/Passed_TestCase12_" + browserName + ".jpg"));
 			// Click the ok button
 			alert.accept();
 		} catch (AssertionError e) {
 			Reporter.log("Test Failed");
 			// Capture full window screen
-						BufferedImage screenShot = robot
-								.createScreenCapture(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()));
-						ImageIO.write(screenShot, "JPG",
-								new File(projectPath + "/screenshot/Failed_TestCase12_" + browserName + ".jpg"));
+			BufferedImage screenShot = robot
+					.createScreenCapture(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()));
+			ImageIO.write(screenShot, "JPG",
+					new File(projectPath + "/screenshot/Failed_TestCase12_" + browserName + ".jpg"));
 			// Click the ok button
 			alert.accept();
 		}
 	}
 
-	// TestCase13: In index page, ****click the id prompt button then show the prompt
-		// box, input your name and click the ok button; The prompt box should be closed;
-		//@Ignore
-		@Parameters("browserName")
-		@Test
-		public void testCase13(String browserName) throws InterruptedException, IOException, AWTException {
-			String ActualResult;
-			String ExpectedResult = "car";
+	// TestCase13: In index page, check select a vehicle of radio button and select
+	// car of radio button; Should selected car of radio button;
+	@Ignore
+	@Parameters("browserName")
+	@Test
+	public void testCase13(String browserName) throws InterruptedException, IOException, AWTException {
+		String ActualResult = null;
+		String ExpectedResult = "Car";
 
-			// Direct to testing website
-			driver.get("https://omayo.blogspot.com/");
-			Reporter.log("Opened the browser and direct to index page URL (" + driver.getCurrentUrl() + ")<br>");
-			// Waiting the id prompt button is visibility
-			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
-			wait.until(ExpectedConditions.visibilityOf(IndexPage.getpromptbutton_prompt(driver)));
-			// Move to show the id prompt button
-			Actions actions = new Actions(driver);
-			actions.moveToElement(IndexPage.getpromptbutton_prompt(driver)).perform();
-			// Click the id prompt button
-			IndexPage.getpromptbutton_prompt(driver).click();
-			//Thread.sleep(3000);
-			// Wait for the prompt box to be displayed and store it in a variable
-			Alert alert = wait.until(ExpectedConditions.alertIsPresent());
-			// Chrome driver is not support prompt alert input text, so if browser is not chrome then input the name
-			if (browserName != "chrome")
-			{
-				// input your name
-				alert.sendKeys("KaKaKaKa");
-			}
-			// Get the alert message for reuslt compare
-			ActualResult = alert.getText();
-			Thread.sleep(3000);
-			Robot robot = new Robot();
-			try {
-				// Assert result
-				AssertJUnit.assertEquals(ActualResult, ExpectedResult);
-				Reporter.log("Test Passed, ActualUrl: " + ActualResult + ", ExpectedUrl: " + ExpectedResult);
-				// Capture full window screen
-							BufferedImage screenShot = robot
-									.createScreenCapture(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()));
-							ImageIO.write(screenShot, "JPG",
-									new File(projectPath + "/screenshot/Passed_TestCase12_" + browserName + ".jpg"));
-				// Click the ok button
-				alert.accept();
-			} catch (AssertionError e) {
-				Reporter.log("Test Failed");
-				// Capture full window screen
-							BufferedImage screenShot = robot
-									.createScreenCapture(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()));
-							ImageIO.write(screenShot, "JPG",
-									new File(projectPath + "/screenshot/Failed_TestCase12_" + browserName + ".jpg"));
-				// Click the ok button
-				alert.accept();
+		// Direct to testing website
+		driver.get("https://omayo.blogspot.com/");
+		Reporter.log("Opened the browser and direct to index page URL (" + driver.getCurrentUrl() + ")<br>");
+		// Waiting those radio button show out
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+		wait.until(ExpectedConditions.visibilityOfAllElements(IndexPage.selectavehicleradiobutton_vehicle(driver)));
+		// Move to show the select a vehicle of radio button
+		Actions actions = new Actions(driver);
+		actions.moveToElement(IndexPage.selectvehicleradiobutton_car(driver)).perform();
+		// Check which one selected
+		List RadioButton = IndexPage.selectavehicleradiobutton_vehicle(driver);
+		for (int i = 0; i < RadioButton.size(); i++) {
+			String val = ((WebElement) RadioButton.get(i)).getAttribute("value");
+			if (val.equalsIgnoreCase("car")) {
+				((WebElement) RadioButton.get(i)).click();
+				ActualResult = ((WebElement) RadioButton.get(i)).getAttribute("value");
+				break;
 			}
 		}
-	
+
+		try {
+			// Assert result
+			AssertJUnit.assertEquals(ActualResult, ExpectedResult);
+			Reporter.log("Test Passed, ActualUrl: " + ActualResult + ", ExpectedUrl: " + ExpectedResult);
+			// Capture window screen
+			File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+			FileUtils.copyFile(scrFile,
+					new File(projectPath + "/screenshot/Passed_TestCase13_" + browserName + ".jpg"));
+		} catch (AssertionError e) {
+			Reporter.log("Test Failed, ActualUrl: " + ActualResult + ", ExpectedUrl: " + ExpectedResult);
+			// Capture window screen
+			File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+			FileUtils.copyFile(scrFile,
+					new File(projectPath + "/screenshot/Passed_TestCase13_" + browserName + ".jpg"));
+		}
+	}
+
+	// TestCase14: In index page, checked select multiple options of all checkboxes; Should checked all checkboxes;
+	//@Ignore
+	@Parameters("browserName")
+	@Test
+	public void testCase14(String browserName) throws InterruptedException, IOException, AWTException {
+		int ActualResult = 0;
+		int ExpectedResult = 4;
+
+		// Direct to testing website
+		driver.get("https://omayo.blogspot.com/");
+		Reporter.log("Opened the browser and direct to index page URL (" + driver.getCurrentUrl() + ")<br>");
+		// Waiting those checkboxes show out
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+		wait.until(ExpectedConditions.visibilityOfAllElements(IndexPage.checkboxselectmultipleoptions_accessories(driver)));
+		// Move to show the select multiple options of checkboxes
+		Actions actions = new Actions(driver);
+		actions.moveToElement(IndexPage.buttondelayedbuttondropdown_Dropdown(driver)).perform();
+		// Check which one selected
+		List checkboxes = IndexPage.checkboxselectmultipleoptions_accessories(driver);
+		for (int i = 0; i < checkboxes.size(); i++) {
+			if(!((WebElement) checkboxes.get(i)).isSelected())
+			{
+				((WebElement) checkboxes.get(i)).click();
+			}
+			ActualResult += 1;
+		}
+
+		try {
+			// Assert result
+			AssertJUnit.assertEquals(ActualResult, ExpectedResult);
+			Reporter.log("Test Passed, ActualUrl: " + ActualResult + ", ExpectedUrl: " + ExpectedResult);
+			// Capture window screen
+			File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+			FileUtils.copyFile(scrFile,
+					new File(projectPath + "/screenshot/Passed_TestCase14_" + browserName + ".jpg"));
+		} catch (AssertionError e) {
+			Reporter.log("Test Failed, ActualUrl: " + ActualResult + ", ExpectedUrl: " + ExpectedResult);
+			// Capture window screen
+			File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+			FileUtils.copyFile(scrFile,
+					new File(projectPath + "/screenshot/Passed_TestCase14_" + browserName + ".jpg"));
+		}
+	}
+
 	// For test code
 	@Ignore
 	@Test
